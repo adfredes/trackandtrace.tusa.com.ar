@@ -1,0 +1,8 @@
+﻿<span ng-if="$ctrl.item.Cantidad>0"
+      ng-class="{c0:$ctrl.item.Dias < 0 ,c1:$ctrl.item.Dias < 6 && $ctrl.item.Dias > -1, c3:$ctrl.item.Dias > 7, c2:$ctrl.item.Dias > 5 && $ctrl.item.Dias < 8}"
+      ng-click="$ctrl.openModal($event)" style="margin:0px;">
+    <md-tooltip md-direction="bottom">
+	<span style="text-transform:uppercase">{{$ctrl.item.UnidadNegocio}}</span>: {{$ctrl.item.Cantidad}} legajo<span ng-if="$ctrl.item.Cantidad>1">s</span> con {{$ctrl.item.Dias}} día<span ng-if="$ctrl.item.Dias>1">s</span> de demora.
+    </md-tooltip>
+    {{$ctrl.item.Cantidad}}
+</span>

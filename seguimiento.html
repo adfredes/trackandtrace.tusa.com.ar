@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        *
+        {
+            padding:0px;
+            margin: 0px;
+        }
+        iframe
+        {
+            width:calc(100% - 6px);
+            border: none;
+            /*height: calc(100vh - 10px);            */
+        }
+        
+        .idComplete
+        {
+            width:calc(100% - 6px);
+            height: calc(100vh - 10px);                        
+        }
+        
+        .initDiv
+        {
+            transform: translateY(195px);
+            height: 125px;  
+            overflow:hidden;
+                
+        }
+        .iframeInit
+        {
+            transform: translateY(-185px);
+            height: 1000px;
+                        
+        }
+    </style>
+</head>
+<body>
+<div id="dContent" class="idComplete">
+    <div id="dFrame" class="initDiv">
+        <iframe src="https://www.sidomweb.com.ar/"  id="iframe" class="iframeInit"/>    
+    </div>
+</div>
+<script>
+    console.log("hola");
+    var iframe = document.querySelector("#iframe");
+    var div = document.querySelector("#dFrame");
+    iframe.onload = function(e) {
+        if (iframe.contentWindow.location == "https://www.sidomweb.com.ar/") {
+            iframe.className = "iframeInit";
+            div.className = "initDiv";
+
+        }
+        else {
+            iframe.className = "idComplete";
+            div.className = "idComplete";            
+        }
+    }    
+</script>
+</body>
+</html>

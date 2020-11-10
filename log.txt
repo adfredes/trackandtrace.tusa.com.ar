@@ -1,0 +1,8 @@
+
+02/09/2020 20:13:06
+
+System.IndexOutOfRangeException: SqlParameterCollection no contiene SqlParameter con ParameterName '@resu'.
+   en System.Data.SqlClient.SqlParameterCollection.GetParameter(String parameterName)
+   en System.Data.SqlClient.SqlParameterCollection.get_Item(String parameterName)
+   en clsConex.exSqlwithP(String sql, SqlCommand oComm) en E:\TrackAndTrace\App_Code\clsConex.vb:línea 84
+

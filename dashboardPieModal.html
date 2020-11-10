@@ -1,0 +1,15 @@
+﻿<md-dialog aria-label="Pie" class="w-50">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background: rgba(51, 117, 119, 1)">
+            <h5 class="modal-title text-center text-capitalize w-100">Unidad de Negocio {{modalTitle}}</h5>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="p-4">
+        <canvas class="chart chart-pie"
+                chart-data="items" chart-labels="labels"
+                chart-options="options"
+                chart-colors="colors">
+        </canvas>
+    </md-dialog-content>
+
+</md-dialog>

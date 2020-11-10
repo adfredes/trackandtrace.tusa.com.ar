@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/chart.min.css" rel="stylesheet" />
+    <script src="Scripts/chart.min.js" type="text/javascript"></script>
+    <script src="Scripts/angular.min.js" type="text/javascript"></script>
+    <script src="Scripts/angular-chart.js" type="text/javascript"></script>
+</head>
+<body ng-app="app" ng-controller="ctr">
+
+    <canvas class="chart chart-pie"
+            chart-data="data" chart-labels="labels" chart-options="options">
+    </canvas>
+
+    <canvas class="chart chart-pie"
+            chart-data="data2" chart-labels="labels2" chart-options="options">
+    </canvas>
+
+
+
+    <script>
+
+        window.module = (() => angular.module('app', ['chart.js']))();
+
+        (app => {
+
+            app.controller('ctr', ['$scope', controller]);
+
+            function controller($scope) {
+                $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+                $scope.data = [300, 500, 100];
+
+                $scope.labels2 = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+                $scope.data2 = [100, 500, 100];
+            }
+
+        })(window.module);
+    </script>
+</body>
+</html>

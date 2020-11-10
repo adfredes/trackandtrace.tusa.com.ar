@@ -1,0 +1,24 @@
+﻿<md-dialog aria-label="Despacho" class="w-75 p-0" md-draggable>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background: rgba(51, 117, 119, 1)">
+            <h5 class="modal-title">
+                Detalle Despacho {{despacho}}</h5>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="images/iconos/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="p-0" style="overflow:hidden;">
+        <!--<div ng-bind-html="html">
+        </div>-->
+        <iframe ng-src="{{'ctt_detalle2.aspx?psp='+despacho
+                }}" class="w-100" style="height:75vh;"></iframe>
+
+                </md-dialog-content>
+
+                <!--<md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type='button' class='md-raised md-warn' ng-click='cancel()'><i class='icon-cancel'></i> Salir</md-button>
+    </md-dialog-actions>-->
+</md-dialog>

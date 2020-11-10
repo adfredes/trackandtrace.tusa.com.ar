@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Descarga Archivos</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+    <style type="text/css">
+        .contenedor_archivos
+        {
+            min-width:320px;
+            min-height: 320px;
+            background-color: #E9F1F6;
+            border: 1px solid #000;
+            border-radius: 5px;
+            margin:10px auto;
+            padding:20px;
+            display:inline-block;
+        }
+        
+        .lista_archivos
+        {
+        	text-decoration: none;
+        	list-style: none;
+        	margin:0px;
+        	padding:0px;
+        }        
+        
+        .lista_archivos li:hover
+        {
+            font-weight:bold;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor_archivos">
+    <strong>Archivos</strong>
+    <hr />
+    <p id="pBuscando">Buscando, aguarde...</p>
+    <ul id="listaArchivos" class="lista_archivos">        
+    </ul>
+    <br />   
+    <strong>Facturas Digitalizadas</strong>
+    <hr />
+    <p id="pBuscandoFacturas">Buscando, aguarde...</p>
+    <ul id="listaFacturas" class="lista_archivos">
+    </ul>
+    <br />   
+    <strong>Archivos PSAD</strong>
+    <hr />
+    <p id="pBuscandoSertear">Buscando, aguarde...</p>
+    <ul id="listaSertear" class="lista_archivos">
+    </ul>
+</div>
+
+    <script type="text/javascript">    
+        (function(){
+            var ulTyt, ulSertear;
+            onLoad();
+            
+            function onLoad(){
+                                         
+                if(window.location.hash){
+                    getArchivos(window.location.hash.split('#')[1],
+                                document.querySelector("#listaArchivos"),
+                                 'wsDashboard.asmx/GetArchivosTyT', 
+                                 document.querySelector('#pBuscando'));
+                    getArchivos(window.location.hash.split('#')[1], 
+                                document.querySelector("#listaSertear"),
+                                'wsDashboard.asmx/GetArchivosSertear',
+                                document.querySelector('#pBuscandoSertear'));     
+                     
+                    getArchivos(window.location.hash.split('#')[1], 
+                                document.querySelector("#listaFacturas"),
+                                'wsDashboard.asmx/GetFacturasTyT',
+                                document.querySelector('#pBuscandoFacturas'));     
+                                                                         
+                }
+            }       
+            //GetArchivosTyT
+            //'wsDashboard.asmx/GetArchivosSertear'
+            function getArchivos(despacho, ul, url, leyenda){
+                ul.style.display = 'none';
+                let xhr = new XMLHttpRequest();
+                xhr.open('Post',url);
+                xhr.setRequestHeader('Content-Type', "application/json; charset=utf-8" );
+                xhr.addEventListener('load', function(){                
+                    if(xhr.status == 200){                                                
+                        let despachos = JSON.parse(JSON.parse(xhr.response).d);                        
+                        let docFrag = document.createDocumentFragment();                        
+                        for(let i = 0; i < despachos.length; i++){
+                            let li = document.createElement('li');
+                            li.innerText = despachos[i].descripcion;                           
+                            li.onclick=descargarArchivo;    
+                            li.dataset.url = despachos[i].url;
+                            docFrag.appendChild(li);
+                        }
+                        if(despachos.length>0){
+                            leyenda.style.display='none';
+                        }
+                        else{
+                            leyenda.style.display='none';
+                            let li = document.createElement('li');
+                            li.innerText = 'No existen archivos digitalizados';                                                       
+                            docFrag.appendChild(li);
+                        }
+                        ul.appendChild(docFrag);
+                        ul.style.display = 'block';
+                        
+                    }
+                });
+                let miDespacho = {};
+                miDespacho.despacho = despacho;
+                
+                xhr.send(JSON.stringify(miDespacho));
+            }     
+            
+            function descargarArchivo(e){
+                window.open(e.target.dataset.url);
+            }
+        })()        
+    </script>
+
+</body>
+</html>

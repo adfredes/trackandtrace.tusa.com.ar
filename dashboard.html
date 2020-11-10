@@ -1,0 +1,118 @@
+﻿<style>
+    md-content.md-default-theme, md-content {
+        color: rgba(0,0,0,0.87);
+        background-color: transparent;
+    }
+
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+</style>
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="datos">
+                <md-content class="md-padding">
+                    <table style="width:100%" id="dashTable">
+                        <tbody>
+                            <tr ng-repeat="un in $ctrl.unidadesNegocios" class="trBorder">
+                                <td>
+                                    <dashboard-pie items="[un.Azul, un.Verde, un.Amarillo, un.Rojo]" chart-title="{{un.UnidadNegocio}}"
+                                                   style="width:50px; height:25px;"></dashboard-pie>
+                                </td>
+                                <td style="text-transform:uppercase">
+                                    {{un.UnidadNegocio}}
+                                </td>
+                                <td ng-repeat="item in un.valores">
+                                    <dashboard-item item="item" style="text-align:center;"></dashboard-item>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot ng-if="$ctrl.unidadesNegocios.length>0">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>-10</td>
+                                <td></td>
+                                <td>-8</td>
+                                <td></td>
+                                <td>-6</td>
+                                <td></td>
+                                <td>-4</td>
+                                <td></td>
+                                <td>-2</td>
+                                <td></td>
+                                <td>0</td>
+                                <td></td>
+                                <td>2</td>
+                                <td></td>
+                                <td>4</td>
+                                <td></td>
+                                <td>6</td>
+                                <td></td>
+                                <td>8</td>
+                                <td></td>
+                                <td>10</td>
+                                <td></td>
+                                <td>12</td>
+                                <td></td>
+                                <td>14</td>
+                                <td></td>
+                                <td>16</td>
+                                <td></td>
+                                <td>18</td>
+                                <td></td>
+                                <td>20</td>
+                                <td></td>
+                                <td>22</td>
+                                <td></td>
+                                <td>24</td>
+                                <td></td>
+                                <td>26</td>
+                                <td></td>
+                                <td>28</td>
+                                <td></td>
+                                <td>+30</td>
+
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </md-content>
+            </md-tab>
+
+            <md-tab label="grafico">
+                <md-content class="md-padding">
+                    <div class="container">
+                        <canvas class="chart chart-line" chart-data="$ctrl.data"
+                                chart-labels="$ctrl.labels" chart-series="$ctrl.series" chart-options="$ctrl.options">
+                        </canvas>
+                    </div>
+
+                </md-content>
+            </md-tab>
+
+            <md-tab label="tyt" ng-click="alert('hola')">
+                <md-content class="md-padding">
+                    <div class="container">
+                        
+                    </div>
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+    <script>
+        window.addEventListener('load', e => {
+            let tab = document.querySelector('#tab-item-2');
+            console.dir(tab);
+            tab.addEventListener('click', f => window.location.href = 'home.aspx');
+        });
+        
+    </script>
+</div>
+
+
+
+
+

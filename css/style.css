@@ -1,0 +1,136 @@
+.titulos
+{
+    font-family: Arial;
+    font-size: 14px;
+    color: #4C91BD;
+    font-weight: bold;
+}
+.texto
+{
+    font-family: Tahoma;
+    font-size: 11px;
+    color: Black;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.textoC
+{
+    font-family: Tahoma;
+    font-size: 12px;
+    color: Black;
+    text-decoration: none;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+/*{
+    padding:10px; 
+    margin: 5px; 
+    color:#000;
+    text-decoration: none;
+}*/
+
+.aHref:Hover
+{
+    padding: 10px;
+    margin: 5px;
+    background: gray;
+    color: #fff;
+}
+
+.textoB
+{
+    font-family: Tahoma;
+    font-size: 12px;
+    color: Black;
+    text-decoration: none;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.textoTitulo
+{
+    font-family: Tahoma;
+    font-size: 11px;
+    font-weight: bold;
+    color: Black;
+    text-decoration: none;
+}
+.a.texto:hover
+{
+    text-decoration: none;
+    color: #660099;
+}
+.titulos
+{
+    font-family: Arial;
+    font-size: 14px;
+    color: #4C91BD;
+    font-weight: bold;
+}
+.texto1
+{
+    font-family: Tahoma;
+    font-size: 9px;
+    font-weight: Bold;
+    color: Black;
+    text-decoration: none;
+}
+.texto2
+{
+    font-family: Tahoma;
+    font-size: 9px;
+    color: #396C8C;
+    text-decoration: none;
+}
+.a.texto2:hover
+{
+    text-decoration: underline;
+    color: #284F68;
+}
+.texto_d2
+{
+    font-family: Tahoma;
+    font-size: 9px;
+    color: #8A8A8A;
+    text-decoration: none;
+}
+
+.texto_D1
+{
+    font-family: Tahoma;
+    font-size: 9px;
+    font-weight: Bold;
+    color: #5D5D5D;
+    text-decoration: none;
+}
+.encabezadoTabla
+{
+    font-family: Tahoma;
+    font-size: 11px;
+    color: White;
+    text-decoration: none;
+}
+.textoHawb
+{
+    font-family: Tahoma;
+    font-size: 11px;
+    color: Black;
+    font-weight: bold;
+}
+td.bordes
+{
+    border-color: #4A92BD;
+}
+.especial
+{
+    border-style: solid;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+}
+
+
+
+

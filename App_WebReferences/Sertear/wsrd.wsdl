@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.sertear.com.ar" xmlns:s1="ar.gov.afip.dia.ServiciosWeb.wConsDepFiel" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.sertear.com.ar" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Interface SRD</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.sertear.com.ar">
+      <s:import namespace="ar.gov.afip.dia.ServiciosWeb.wConsDepFiel" />
+      <s:element name="getDespachos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportadorExportador" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CuitImportadorExportador" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Despacho" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Anio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Aduana" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DocumentoTipo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DocumentoNro" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Letra" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Caja" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PaginasD" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PaginasH" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AltaD" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AltaH" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDespachosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDespachosResult" type="tns:ArrayOfDocument" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Document">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Anio" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Aduana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoTipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoNro" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Letra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caja" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Paginas" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CuitDespachante" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Despachante" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CuitImportadorExportador" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImportadorExportador" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Alta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlDespacho" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia5" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AuthHeader" type="tns:AuthHeader" />
+      <s:complexType name="AuthHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="infDocOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listaDespachos" type="tns:ArrayOfDespacho" />
+            <s:element minOccurs="0" maxOccurs="1" name="envio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDespacho">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Despacho" nillable="true" type="tns:Despacho" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Despacho">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Anio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Aduana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoTipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoNro" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Letra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caja" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Fecha" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="infDocOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="infDocOutResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAfipState">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="legajo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAfipStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAfipStateResult" type="s1:RtaListaEstado" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAnexos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="despacho" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="documentoTipo" type="tns:DocumentosTiposEnum" />
+            <s:element minOccurs="0" maxOccurs="1" name="sigea" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="DocumentosTiposEnum">
+        <s:restriction base="s:string">
+          <s:enumeration value="Despacho" />
+          <s:enumeration value="DocumentacionAdicional" />
+          <s:enumeration value="DocumentacionPersonal" />
+          <s:enumeration value="RectificativaBTotal" />
+          <s:enumeration value="RectificativaBParcial" />
+          <s:enumeration value="RectificativaAPost" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="getAnexosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAnexosResult" type="tns:ArrayOfDocumentoA" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDocumentoA">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DocumentoA" nillable="true" type="tns:DocumentoA" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentoA">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Secuencia" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlPdf" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FechaUpd" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Anio" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Aduana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Letra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoTipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentoNro" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caja" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Paginas" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Alta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UrlFamilia5" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getDespachosMob">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="despacho" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="anio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="aduana" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="documentoTipo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="documentoNro" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="letra" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="paginasDesde" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="paginasHasta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fechaDesde" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fechaHasta" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDespachosMobResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDespachosMobResult" type="tns:ArrayOfDocument" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="ar.gov.afip.dia.ServiciosWeb.wConsDepFiel">
+      <s:complexType name="RtaListaEstado">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Recibo" type="s1:Recibo" />
+          <s:element minOccurs="0" maxOccurs="1" name="LegajoEstado" type="s1:LegajoEstado" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Recibo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CodErr" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescErr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescAdicErr" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LegajoEstado">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="NroLegajo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Codigo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FechaVtoPSAD" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="FechaVtoDIGI" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CuitIE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescIE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CuitDesp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescDesp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sigea" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getDespachosSoapIn">
+    <wsdl:part name="parameters" element="tns:getDespachos" />
+  </wsdl:message>
+  <wsdl:message name="getDespachosSoapOut">
+    <wsdl:part name="parameters" element="tns:getDespachosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDespachosAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="infDocOutSoapIn">
+    <wsdl:part name="parameters" element="tns:infDocOut" />
+  </wsdl:message>
+  <wsdl:message name="infDocOutSoapOut">
+    <wsdl:part name="parameters" element="tns:infDocOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="infDocOutAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAfipStateSoapIn">
+    <wsdl:part name="parameters" element="tns:getAfipState" />
+  </wsdl:message>
+  <wsdl:message name="getAfipStateSoapOut">
+    <wsdl:part name="parameters" element="tns:getAfipStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAfipStateAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAnexosSoapIn">
+    <wsdl:part name="parameters" element="tns:getAnexos" />
+  </wsdl:message>
+  <wsdl:message name="getAnexosSoapOut">
+    <wsdl:part name="parameters" element="tns:getAnexosResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAnexosAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDespachosMobSoapIn">
+    <wsdl:part name="parameters" element="tns:getDespachosMob" />
+  </wsdl:message>
+  <wsdl:message name="getDespachosMobSoapOut">
+    <wsdl:part name="parameters" element="tns:getDespachosMobResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDespachosMobAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader" />
+  </wsdl:message>
+  <wsdl:portType name="wsSRDSoap">
+    <wsdl:operation name="getDespachos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retorna una lista de despachos</wsdl:documentation>
+      <wsdl:input message="tns:getDespachosSoapIn" />
+      <wsdl:output message="tns:getDespachosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="infDocOut">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informe de entrega de despachos</wsdl:documentation>
+      <wsdl:input message="tns:infDocOutSoapIn" />
+      <wsdl:output message="tns:infDocOutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAfipState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retorna el estado del legajo en Afip</wsdl:documentation>
+      <wsdl:input message="tns:getAfipStateSoapIn" />
+      <wsdl:output message="tns:getAfipStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAnexos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retorna una lista de anexos.</wsdl:documentation>
+      <wsdl:input message="tns:getAnexosSoapIn" />
+      <wsdl:output message="tns:getAnexosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDespachosMob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retorna una lista de despachos</wsdl:documentation>
+      <wsdl:input message="tns:getDespachosMobSoapIn" />
+      <wsdl:output message="tns:getDespachosMobSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsSRDSoap" type="tns:wsSRDSoap">
+    <wsdl:documentation>
+      <wsi:Claim conformsTo="http://ws-i.org/profiles/basic/1.1" xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" />
+    </wsdl:documentation>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getDespachos">
+      <soap:operation soapAction="http://www.sertear.com.ar/getDespachos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getDespachosAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="infDocOut">
+      <soap:operation soapAction="http://www.sertear.com.ar/infDocOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:infDocOutAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAfipState">
+      <soap:operation soapAction="http://www.sertear.com.ar/getAfipState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getAfipStateAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAnexos">
+      <soap:operation soapAction="http://www.sertear.com.ar/getAnexos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getAnexosAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDespachosMob">
+      <soap:operation soapAction="http://www.sertear.com.ar/getDespachosMob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:getDespachosMobAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsSRDSoap12" type="tns:wsSRDSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getDespachos">
+      <soap12:operation soapAction="http://www.sertear.com.ar/getDespachos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getDespachosAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="infDocOut">
+      <soap12:operation soapAction="http://www.sertear.com.ar/infDocOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:infDocOutAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAfipState">
+      <soap12:operation soapAction="http://www.sertear.com.ar/getAfipState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getAfipStateAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAnexos">
+      <soap12:operation soapAction="http://www.sertear.com.ar/getAnexos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getAnexosAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDespachosMob">
+      <soap12:operation soapAction="http://www.sertear.com.ar/getDespachosMob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:getDespachosMobAuthHeader" part="AuthHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsSRD">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Interface SRD</wsdl:documentation>
+    <wsdl:port name="wsSRDSoap" binding="tns:wsSRDSoap">
+      <soap:address location="https://srd.lakaut.com.ar/srd/ws/wsrd.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsSRDSoap12" binding="tns:wsSRDSoap12">
+      <soap12:address location="https://srd.lakaut.com.ar/srd/ws/wsrd.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
