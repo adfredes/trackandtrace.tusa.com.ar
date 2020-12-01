@@ -77,11 +77,23 @@
       </md-tab>
       <md-tab label="Aduana" onClick="mostrar('dAduana')">
       </md-tab>
+      <md-tab label="Base Imponible" onClick="mostrar('dBaseImponible')">
+      </md-tab>
+      <md-tab label="FOB" onClick="mostrar('dFob')">
+      </md-tab>
+      <md-tab label="CIF" onClick="mostrar('dCIF')">
+      </md-tab>
+      <md-tab label="Flete" onClick="mostrar('dFlete')">
+      </md-tab>
+      <md-tab label="PAGADO" onClick="mostrar('dGastos')">
+      </md-tab>
       <md-tab label="Arribo-Oficialización" onClick="mostrar('dArriboOfi')">
       </md-tab>
       <md-tab label="Oficialización-Cancelado/Liberado" onClick="mostrar('dOfiEntrega')">
       </md-tab>
       <md-tab label="Arribo-Cancelado/Liberado" onClick="mostrar('dArriboEntrega')">
+      </md-tab>      
+        <md-tab label="TODOS" onClick="mostrar(null)">
       </md-tab>      
       </md-tabs>
       </md-content>      
@@ -116,6 +128,7 @@
             <asp:Panel ID="pGraficos" runat="server">            
                 <div id="dOpe" style="page-break-after: always;" class="MostrarDivGrafico">
                 <fieldset>                    
+                    <h4 class="p-4 d-none">x TIPO OPERACIÓN</h4>
                     <asp:GridView ID="GridView6" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -130,12 +143,13 @@
                             <asp:ChartArea Name="ChartArea1">
                             </asp:ChartArea>
                         </ChartAreas>
-                    </asp:Chart>                    
-                    </fieldset>                    
+                    </asp:Chart>                       
+                    <hr class="d-none" /></fieldset>                
                 </div>
                 
                 <div id="dTrp" style="page-break-after: always;" class="OcultarDivGrafico">
-                <fieldset>                    
+                <fieldset>         
+                    <h4 class="p-4 d-none">x TIPO TRANSPORTE</h4>
                     <asp:GridView ID="GridView7" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -151,11 +165,12 @@
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>                    
-                    </fieldset>                    
+                    <hr class="d-none" /></fieldset>                
                 </div>
                 
                 <div id="dDes" style="page-break-after: always;" class="OcultarDivGrafico">
                     <fieldset>                    
+                        <h4 class="p-4 d-none">x DESTINACIÓN</h4>
                     <asp:GridView ID="GridView8" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -171,11 +186,12 @@
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>                    
-                    </fieldset>                    
+                    <hr class="d-none" /></fieldset>                
                 </div>
                 
                 <div id="dCanal" style="page-break-after: always;" class="OcultarDivGrafico">
-                    <fieldset>                    
+                    <fieldset>              
+                        <h4 class="p-4 d-none">x CANAL</h4>
                     <asp:GridView ID="GridView9" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -191,11 +207,12 @@
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>                    
-                    </fieldset>                    
+                    <hr class="d-none" /></fieldset>                
                 </div>
                 
                 <div id="dAduana" style="page-break-after: always;" class="OcultarDivGrafico">
-                    <fieldset>                    
+                    <fieldset>           
+                        <h4 class="p-4 d-none">x ADUANA</h4>
                     <asp:GridView ID="GridView10" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -211,11 +228,121 @@
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>                    
-                    </fieldset>                    
+                    <hr class="d-none" /></fieldset>                
                 </div>
+
+                <div id="dBaseImponible" style="page-break-after: always;" class="OcultarDivGrafico">
+                    <fieldset>                    
+                        <h4 class="p-4 d-none">BASE IMPONIBLE</h4>
+                    <asp:GridView ID="GridView12" runat="server" BackColor="White" BorderColor="#CCCCCC"
+                        BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
+                        <RowStyle ForeColor="#000066" />
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#00aadd" Font-Bold="True" ForeColor="White" />
+                    </asp:GridView>
+                    <br />
+                    <asp:Chart ID="Chart12" runat="server" Width="627px" EnableViewState="True">
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1">
+                            </asp:ChartArea>
+                        </ChartAreas>
+                    </asp:Chart>                    
+                    <hr class="d-none" /></fieldset>             
+                </div>
+
+
+                <div id="dFob" style="page-break-after: always;" class="OcultarDivGrafico">                    
+                    <fieldset>                    
+                        <h4 class="p-4 d-none">TOTAL FOB </h4>
+                    <asp:GridView ID="GridView3" runat="server" BackColor="White" BorderColor="#CCCCCC"
+                        BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
+                        <RowStyle ForeColor="#000066" />
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#00aadd" Font-Bold="True" ForeColor="White" />
+                    </asp:GridView>
+                    <br />
+                    <asp:Chart ID="Chart9" runat="server" Width="627px" EnableViewState="True">
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1">
+                            </asp:ChartArea>
+                        </ChartAreas>
+                    </asp:Chart>                    
+                    <hr class="d-none" /></fieldset>             
+                </div>
+
+                 <div id="dCIF" style="page-break-after: always;" class="OcultarDivGrafico">
+                    <fieldset>    
+                        <h4 class="p-4 d-none">TOTAL CIF</h4>
+                    <asp:GridView ID="GridView4" runat="server" BackColor="White" BorderColor="#CCCCCC"
+                        BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
+                        <RowStyle ForeColor="#000066" />
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#00aadd" Font-Bold="True" ForeColor="White" />
+                    </asp:GridView>
+                    <br />
+                    <asp:Chart ID="Chart10" runat="server" Width="627px" EnableViewState="True">
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1">
+                            </asp:ChartArea>
+                        </ChartAreas>
+                    </asp:Chart>                    
+                    <hr class="d-none" /></fieldset>             
+                </div>
+
+                 <div id="dFlete" style="page-break-after: always;" class="OcultarDivGrafico">
+                    <fieldset>        
+                        <h4 class="p-4 d-none">TOTAL FLETE</h4>
+                    <asp:GridView ID="GridView5" runat="server" BackColor="White" BorderColor="#CCCCCC"
+                        BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
+                        <RowStyle ForeColor="#000066" />
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#00aadd" Font-Bold="True" ForeColor="White" />
+                    </asp:GridView>
+                    <br />
+                    <asp:Chart ID="Chart11" runat="server" Width="627px" EnableViewState="True">
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1">
+                            </asp:ChartArea>
+                        </ChartAreas>
+                    </asp:Chart>                    
+                    <hr class="d-none" /></fieldset>             
+                </div>
+
+                <div id="dGastos" style="page-break-after: always;" class="OcultarDivGrafico">
+                    <fieldset>                    
+                        <h4 class="p-4 d-none">PAGADO X CONCEPTO</h4>
+                    <asp:GridView ID="GridView13" runat="server" BackColor="White" BorderColor="#CCCCCC"
+                        BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
+                        <RowStyle ForeColor="#000066" />
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#00aadd" Font-Bold="True" ForeColor="White" />
+                    </asp:GridView>
+                    <br />
+                    <asp:Chart ID="Chart13" runat="server" Width="627px" EnableViewState="True">
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1">
+                            </asp:ChartArea>
+                        </ChartAreas>
+                    </asp:Chart>                    
+                    <hr class="d-none" />
+
+                    </fieldset>             
+                </div>
+
                 
                 <div id="dArriboOfi" style="page-break-after: always;" class="OcultarDivGrafico">
-                <fieldset>                    
+                <fieldset>     
+                    <h4 class="p-4 d-none">ARRIBO-OFICIALIZACIÓN </h4>
                     <asp:GridView ID="GridView11" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -230,12 +357,14 @@
                             <asp:ChartArea Name="ChartArea1">
                             </asp:ChartArea>
                         </ChartAreas>
-                    </asp:Chart>                    
+                    </asp:Chart> 
+                    <hr class="d-none" />
                     </fieldset>
                 </div>
                 
                 <div id="dOfiEntrega" class="OcultarDivGrafico">                
-                <fieldset>                    
+                <fieldset>  
+                    <h4 class="p-4 d-none">Oficialización-Cancelado/LiberadoO</h4>
                     <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -250,12 +379,14 @@
                             <asp:ChartArea Name="ChartArea1">
                             </asp:ChartArea>
                         </ChartAreas>
-                    </asp:Chart>                    
+                    </asp:Chart>   
+                    <hr class="d-none" />
                     </fieldset>
                 </div>
                 
                 <div id="dArriboEntrega" class="OcultarDivGrafico">                
                 <fieldset>                    
+                    <h4 class="p-4 d-none">ARRIBO-CANCELADO/LIBERADO</h4>
                     <asp:GridView ID="GridView2" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
@@ -302,10 +433,23 @@
         });
 
         function mostrar(divid) {
-            let divAOcultar = document.querySelector('.MostrarDivGrafico');
-            let divAMostrar = document.querySelector('#' + divid);
-            divAOcultar.className = 'OcultarDivGrafico';
-            divAMostrar.className = 'MostrarDivGrafico';            
+            if (divid) {
+                let divsAOcultar = document.querySelectorAll('.MostrarDivGrafico');
+                let divAMostrar = document.querySelector('#' + divid);
+                divsAOcultar.forEach(div => div.className = 'OcultarDivGrafico');                
+                divAMostrar.className = 'MostrarDivGrafico';
+                let hr = divAMostrar.querySelector('hr');
+                let h4 = divAMostrar.querySelector('h4');
+                hr.classList.add('d-none');
+                h4.classList.add('d-none');                
+            }
+            else {                
+                let divsAMostrar = document.querySelectorAll('.OcultarDivGrafico');
+                console.dir(divsAMostrar);
+                divsAMostrar.forEach(div => div.className = 'MostrarDivGrafico');    
+                let elementosAMostrar = document.querySelectorAll('.d-none');
+                elementosAMostrar.forEach(div => div.classList.remove('d-none'));    
+            }
         }
 
         function ResetTab(){            

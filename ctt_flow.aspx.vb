@@ -49,8 +49,8 @@ Partial Class ctt_flow
         param.Value = Me.txtReferencia.Text.Trim() & "%"
         lisPrm.Add(param)
 
-        oCC.consultaSP("IA_TipoOpe", lisPrm.ToArray, "impo_expo")
         Try
+            oCC.consultaSP("IA_TipoOpe", lisPrm.ToArray, "impo_expo")
             oCC.oDS.Tables("impo_expo").Columns.RemoveAt(oCC.oDS.Tables("impo_expo").Columns.Count - 1)
             oCC.oDS.Tables("impo_expo").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN"
             GridView6.DataSource = oCC.oDS
@@ -62,8 +62,9 @@ Partial Class ctt_flow
         End Try
 
 
-        oCC.consultaSP("IA_TipoTrs", lisPrm.ToArray, "transporte")
+
         Try
+            oCC.consultaSP("IA_TipoTrs", lisPrm.ToArray, "transporte")
             oCC.oDS.Tables("transporte").Columns.RemoveAt(oCC.oDS.Tables("transporte").Columns.Count - 1)
             oCC.oDS.Tables("transporte").Columns("nombre").ColumnName = "TIPO TRANSPORTE"
             If oCC.oDS.Tables("transporte").Rows(0).Item(0) Is Nothing Then
@@ -77,8 +78,9 @@ Partial Class ctt_flow
 
         End Try
 
-        oCC.consultaSP("IA_Destinacion", lisPrm.ToArray, "destinacion")
+
         Try
+            oCC.consultaSP("IA_Destinacion", lisPrm.ToArray, "destinacion")
             oCC.oDS.Tables("destinacion").Columns.RemoveAt(oCC.oDS.Tables("destinacion").Columns.Count - 1)
             oCC.oDS.Tables("destinacion").Columns("dest").ColumnName = "DESTINACIÓN"
             GridView8.DataSource = oCC.oDS
@@ -90,8 +92,9 @@ Partial Class ctt_flow
         End Try
 
 
-        oCC.consultaSP("IA_Canal", lisPrm.ToArray, "canal")
+
         Try
+            oCC.consultaSP("IA_Canal", lisPrm.ToArray, "canal")
             oCC.oDS.Tables("canal").Columns.RemoveAt(oCC.oDS.Tables("canal").Columns.Count - 1)
             GridView9.DataSource = oCC.oDS
             GridView9.DataMember = "canal"
@@ -99,10 +102,11 @@ Partial Class ctt_flow
             renderChartStacked(oCC.oDS.Tables("canal"), Chart4)
         Catch ex As Exception
 
-        End Try        
-        oCC.consultaSP("IA_Aduana", lisPrm.ToArray, "aduana")
+        End Try
+
         'oCC.consultaSP("IA_ArriboOfi", lisPrm.ToArray, "aduana")
         Try
+            oCC.consultaSP("IA_Aduana", lisPrm.ToArray, "aduana")
             oCC.oDS.Tables("aduana").Columns.RemoveAt(oCC.oDS.Tables("aduana").Columns.Count - 1)
             GridView10.DataSource = oCC.oDS
             GridView10.DataMember = "Aduana"
@@ -112,8 +116,9 @@ Partial Class ctt_flow
 
         End Try
 
-        oCC.consultaSP("IA_ArriboOfi", lisPrm.ToArray, "ArriboOfi")
+
         Try
+            oCC.consultaSP("IA_ArriboOfi", lisPrm.ToArray, "ArriboOfi")
             oCC.oDS.Tables("ArriboOfi").Columns.RemoveAt(oCC.oDS.Tables("ArriboOfi").Columns.Count - 1)
             oCC.oDS.Tables("ArriboOfi").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN"
             GridView11.DataSource = oCC.oDS
@@ -124,8 +129,9 @@ Partial Class ctt_flow
 
         End Try
 
-        oCC.consultaSP("IA_OfiEntrega", lisPrm.ToArray, "OfiEntrega")
+
         Try
+            oCC.consultaSP("IA_OfiEntrega", lisPrm.ToArray, "OfiEntrega")
             oCC.oDS.Tables("OfiEntrega").Columns.RemoveAt(oCC.oDS.Tables("OfiEntrega").Columns.Count - 1)
             oCC.oDS.Tables("OfiEntrega").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN"
             GridView1.DataSource = oCC.oDS
@@ -136,14 +142,127 @@ Partial Class ctt_flow
 
         End Try
 
-        oCC.consultaSP("IA_ArriboEntrega", lisPrm.ToArray, "ArriboEntrega")
+
         Try
+            oCC.consultaSP("IA_ArriboEntrega", lisPrm.ToArray, "ArriboEntrega")
             oCC.oDS.Tables("ArriboEntrega").Columns.RemoveAt(oCC.oDS.Tables("ArriboEntrega").Columns.Count - 1)
             oCC.oDS.Tables("ArriboEntrega").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN"
             GridView2.DataSource = oCC.oDS
             GridView2.DataMember = "ArriboEntrega"
             GridView2.DataBind()
             renderChart(oCC.oDS.Tables("ArriboEntrega"), Chart8)
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            oCC.consultaSP("IA_BaseImponible", lisPrm.ToArray, "BaseImponible")
+            oCC.oDS.Tables("BaseImponible").Columns.RemoveAt(oCC.oDS.Tables("BaseImponible").Columns.Count - 1)
+            oCC.oDS.Tables("BaseImponible").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN"
+            For Each row As DataRow In oCC.oDS.Tables("BaseImponible").Rows
+                For x As Integer = 1 To oCC.oDS.Tables("BaseImponible").Columns.Count - 1
+                    If (row(x).ToString() = "") Then
+                        row(x) = 0
+                    Else
+                        row(x) = Math.Round(Convert.ToDouble(row(x)), 2)
+                    End If
+                Next
+            Next
+
+            GridView12.DataSource = oCC.oDS
+            GridView12.DataMember = "BaseImponible"
+            GridView12.DataBind()
+            renderChart(oCC.oDS.Tables("BaseImponible"), Chart12)
+        Catch ex As Exception
+
+        End Try
+        'fob
+        Try
+            oCC.consultaSP("IA_FOB", lisPrm.ToArray, "FOB")
+            oCC.oDS.Tables("FOB").Columns.RemoveAt(oCC.oDS.Tables("FOB").Columns.Count - 1)
+            oCC.oDS.Tables("FOB").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN - MONEDA"
+            For Each row As DataRow In oCC.oDS.Tables("FOB").Rows
+                For x As Integer = 1 To oCC.oDS.Tables("FOB").Columns.Count - 1
+                    If (row(x).ToString() = "") Then
+                        row(x) = 0
+                    Else
+                        row(x) = Math.Round(Convert.ToDouble(row(x)), 2)
+                    End If
+                Next
+            Next
+
+            GridView3.DataSource = oCC.oDS
+            GridView3.DataMember = "FOB"
+            GridView3.DataBind()
+            renderChart(oCC.oDS.Tables("FOB"), Chart9)
+        Catch ex As Exception
+
+        End Try
+
+        'cif
+        Try
+            oCC.consultaSP("IA_CIF", lisPrm.ToArray, "CIF")
+            oCC.oDS.Tables("CIF").Columns.RemoveAt(oCC.oDS.Tables("CIF").Columns.Count - 1)
+            oCC.oDS.Tables("CIF").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN - MONEDA"
+            For Each row As DataRow In oCC.oDS.Tables("CIF").Rows
+                For x As Integer = 1 To oCC.oDS.Tables("CIF").Columns.Count - 1
+                    If (row(x).ToString() = "") Then
+                        row(x) = 0
+                    Else
+                        row(x) = Math.Round(Convert.ToDouble(row(x)), 2)
+                    End If
+                Next
+            Next
+
+            GridView4.DataSource = oCC.oDS
+            GridView4.DataMember = "CIF"
+            GridView4.DataBind()
+            renderChart(oCC.oDS.Tables("CIF"), Chart10)
+        Catch ex As Exception
+
+        End Try
+
+        'flete
+        Try
+            oCC.consultaSP("IA_FLETE", lisPrm.ToArray, "FLETE")
+            oCC.oDS.Tables("FLETE").Columns.RemoveAt(oCC.oDS.Tables("FLETE").Columns.Count - 1)
+            oCC.oDS.Tables("FLETE").Columns("tipo_impo_expo").ColumnName = "TIPO OPERACIÓN - MONEDA"
+            For Each row As DataRow In oCC.oDS.Tables("FLETE").Rows
+                For x As Integer = 1 To oCC.oDS.Tables("FLETE").Columns.Count - 1
+                    If (row(x).ToString() = "") Then
+                        row(x) = 0
+                    Else
+                        row(x) = Math.Round(Convert.ToDouble(row(x)), 2)
+                    End If
+                Next
+            Next
+
+            GridView5.DataSource = oCC.oDS
+            GridView5.DataMember = "FLETE"
+            GridView5.DataBind()
+            renderChart(oCC.oDS.Tables("FLETE"), Chart11)
+        Catch ex As Exception
+
+        End Try
+
+        'flete
+        Try
+            oCC.consultaSP("IA_GASTOS", lisPrm.ToArray, "GASTOS")
+            oCC.oDS.Tables("GASTOS").Columns.RemoveAt(oCC.oDS.Tables("GASTOS").Columns.Count - 1)
+            For Each row As DataRow In oCC.oDS.Tables("GASTOS").Rows
+                For x As Integer = 1 To oCC.oDS.Tables("GASTOS").Columns.Count - 1
+                    If (row(x).ToString() = "") Then
+                        row(x) = 0
+                    Else
+                        row(x) = Math.Round(Convert.ToDouble(row(x)), 2)
+                    End If
+                Next
+            Next
+
+            GridView13.DataSource = oCC.oDS
+            GridView13.DataMember = "GASTOS"
+            GridView13.DataBind()
+            renderChart(oCC.oDS.Tables("GASTOS"), Chart13)
         Catch ex As Exception
 
         End Try
