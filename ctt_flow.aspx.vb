@@ -99,7 +99,8 @@ Partial Class ctt_flow
             GridView9.DataSource = oCC.oDS
             GridView9.DataMember = "canal"
             GridView9.DataBind()
-            renderChartStacked(oCC.oDS.Tables("canal"), Chart4)
+            Dim colorLinea() As Drawing.Color = {Drawing.Color.Yellow, Drawing.Color.Green, Drawing.Color.Red}
+            renderChartStacked(oCC.oDS.Tables("canal"), Chart4, colorLinea)
         Catch ex As Exception
 
         End Try
@@ -303,14 +304,7 @@ Partial Class ctt_flow
                     chr.Series(dr.Item(0).ToString).Points.AddY(CDbl(valor))
                 End If
             Next
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.Bar
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.Column
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.Line
 
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedBar
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedBar100
-            'chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn100
 
 
             chr.Series(dr.Item(0).ToString).Name = dr.Item(0).ToString
@@ -328,27 +322,80 @@ Partial Class ctt_flow
 
     End Sub
 
-    Private Sub renderChartStacked(ByVal tbl As Data.DataTable, ByVal chr As Chart)
+    Private Sub renderChartStacked(ByVal tbl As Data.DataTable, ByVal chr As Chart, Optional colorLinea() As Drawing.Color = Nothing)
         chr.Series.Clear()
         For Each dr As DataRow In tbl.Rows
-            If dr.Item(0).ToString = "" Or dr.Item(0) Is Nothing Then
-                dr.Item(0) = "Sin Especificar"
-            End If
-            chr.Series.Add(dr.Item(0).ToString)
+            'If (Not colorLinea Is Nothing) Then
 
-            For Each dc As String In dr.ItemArray
-                If Not dc = dr.Item(0).ToString Then
-                    chr.Series(dr.Item(0).ToString).Points.AddY(CDbl(dc))
-                End If
-            Next
-            chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn100
+            chr.Series.Add(dr.Item(0).ToString)
+                For col As Integer = 1 To Date.Now.Month
+                    Dim valor As String
+                    If (col < dr.ItemArray.Length) Then
+                        Try
+                            valor = dr(col).ToString
+                        Catch ex As Exception
+                            valor = "0"
+                        End Try
+                    Else
+                        valor = "0"
+                    End If
+                    Dim point As New DataPoint()
+                    point.SetValueY(CDbl(valor))
+                    point.SetValueXY(DateAndTime.MonthName(col), CDbl(valor))
+
+
+                    chr.Series(dr.Item(0).ToString).Points.Add(point)
+                    point.BorderWidth = 4
+                    Select Case dr.Item(0).ToString
+                        Case "VERDE"
+                            point.Color = Drawing.Color.DarkGreen
+                        'point.BorderColor = Drawing.Color.DarkGreen
+                        chr.Series(dr.Item(0).ToString).Color = Drawing.Color.DarkGreen
+                        Case "ROJO"
+                            point.Color = Drawing.Color.Red
+                        'point.BorderColor = Drawing.Color.Red
+                        chr.Series(dr.Item(0).ToString).Color = Drawing.Color.Red
+                        Case "NARANJA"
+                            point.Color = Drawing.Color.DarkOrange
+                        'point.BorderColor = Drawing.Color.DarkOrange
+                        chr.Series(dr.Item(0).ToString).Color = Drawing.Color.DarkOrange
+                    End Select
+
+                    'point.Color = colorLinea(chr.Series.Count - 1)
+                    'point.BorderColor = colorLinea(chr.Series.Count - 1)
+
+
+
+                Next
+
+
+                'Else
+
+                '    If dr.Item(0).ToString = "" Or dr.Item(0) Is Nothing Then
+                '        dr.Item(0) = "Sin Especificar"
+                '    End If
+                '    chr.Series.Add(dr.Item(0).ToString)
+
+                '    For Each dc As String In dr.ItemArray
+                '        If Not dc = dr.Item(0).ToString Then
+                '            chr.Series(dr.Item(0).ToString).Points.AddY(CDbl(dc))
+                '        End If
+                '    Next
+
+                '    ' disable x axis margin
+                '    ' Set the first two series to be grouped into Group1
+                '    'chr.Series(dr.Item(0).ToString)("StackedGroupName") = "Group1"
+
+                'End If
+                chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn100
             chr.Series(dr.Item(0).ToString).Name = dr.Item(0).ToString
             ' show point labels
             chr.Series(dr.Item(0).ToString).IsValueShownAsLabel = False
 
-            ' disable x axis margin
-            ' Set the first two series to be grouped into Group1
-            'chr.Series(dr.Item(0).ToString)("StackedGroupName") = "Group1"
+
+
+
+
 
         Next
 

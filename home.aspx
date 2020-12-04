@@ -7,7 +7,7 @@
        <div class="col-md-4 p-1 h-50">
            <div class="card h-100">
                 <div class="card-header text-center text-uppercase">
-                    <h5 class="card-title">Importaciones de hoy</h5>
+                    <h5 class="card-title">Importaciones</h5>
                 </div>
                 <div class="card-body p-0 table-responsive text-center">         
                     <asp:Label ID="lblImpo" runat="server" Text="" CssClass="text-uppercase  font-italic" Visible="false"></asp:Label>

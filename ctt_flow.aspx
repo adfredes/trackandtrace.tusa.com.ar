@@ -364,7 +364,7 @@
                 
                 <div id="dOfiEntrega" class="OcultarDivGrafico">                
                 <fieldset>  
-                    <h4 class="p-4 d-none">Oficialización-Cancelado/LiberadoO</h4>
+                    <h4 class="p-4 d-none">OFICIALIZACIÓN-CANCELADO/LIBERADO</h4>
                     <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#CCCCCC"
                         BorderStyle="None" BorderWidth="1px" CellPadding="3" PageSize="20" Width="100%">
                         <RowStyle ForeColor="#000066" />
