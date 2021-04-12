@@ -6,26 +6,31 @@
         var $this = this;
         
         $this.openModal = (ev, name, value)=>{
-            let url, title, w75;
+            let url, title, w75, fullScreen;
             switch (name) {
                 case 'DespachoModal':                        
                     title = "Despacho " + value;
                     url = 'ctt_detalle2.aspx?psp=' + value;      
-                    w75 = true;                                 
+                    w75 = true;  
+                    fullScreen = false;
                     break;        
                 case 'DespachoItemModal': 
                     title = "Detalle Item";
                     url = 'ctt_items-operacion.aspx?psp=' + value;                                        
                     w75 = true;
+                    fullScreen = false;
                     break;    
                 case 'DespachoArchivosModal': 
                     title = "Archivos Despacho " + value;
-                    url = 'ctt_archivos.html#' + value;                                        
+                    url = 'ctt_archivos.html#' + value;    
+                    fullScreen = true;
                     break;    
                 case 'VisorArchivosModal': 
                     title = "Archivo";
                     url = value;                                        
                     w75 = true;
+                    fullScreen = true;
+                    ev = document;
                     break;       
                 case 'FacturaDespachoModal':
 //                    let vFactura = value.split('-')
@@ -35,35 +40,41 @@
                     //url = 'factura.aspx?psp=' + value;                                        
                     url = value;
                     w75 = true;
+                    fullScreen = true;
+                    ev = document;
                     break;      
                 case 'SimiModal':                        
                     title = "Simi " + value;
                     url = 'ctt_detalle_djai.aspx?psp=' + value;                                        
                     w75 = true;
+                    fullScreen = false;
                     break;   
                 case 'SfwXmlModal':
                     title = "Reference Code " + value;
                     url = 'sfw_archivos.aspx?ref=' + value;                                        
                     w75 = true;
+                    fullScreen = false;
                     break;   
                 case 'FacturaReciboModal':                        
                     title = "Factura/Recibo ";
                     url = value;                                        
                     w75 = true;
+                    fullScreen = false;
                     break;                                          
                 case 'FFModal':                        
                     title = value.title;
                     url = value.value;                                        
                     w75 = true;
+                    fullScreen = false;
                     break;                                          
             }           
-            openModalView(ev,title,url, w75);
+            openModalView(ev, title, url, w75, fullScreen);
         
         }
                 
                
         
-        openModalView = (ev, title, url, w75) => {            
+        openModalView = (ev, title, url, w75, fullScreen) => {            
             console.log(url);
             let tempscope = $rootScope.$new();
             tempscope.url = url;
@@ -85,7 +96,7 @@
                 $scope.answer = function (answer) {
                     $mdDialog.hide(answer);
                 };
-            }
+            }            
 
             $mdDialog.show({
                 parent: angular.element(document.body),//parent: angular.element(document.body),

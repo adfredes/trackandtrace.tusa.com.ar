@@ -138,6 +138,8 @@
                                     <asp:BoundField DataField="aduana" HeaderText="Aduana"></asp:BoundField>
                                     <asp:BoundField DataField="fecha_oficializacion" DataFormatString="{0:d}" HeaderText="Oficializado">
                                     </asp:BoundField>
+                                    <asp:BoundField DataField="monto_fob" HeaderText="FOB">
+                                    </asp:BoundField>
                                     <asp:BoundField DataField="vto_pres_lna" DataFormatString="{0:d}" HeaderText="Vto Presentación">
                                     </asp:BoundField>
                                     <asp:BoundField DataField="fecha_iniciado" DataFormatString="{0:d}" HeaderText="Presentado">

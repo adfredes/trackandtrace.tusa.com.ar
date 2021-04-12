@@ -110,7 +110,7 @@
             donde se pueda producir una pérdida de datos. 
             Establezca explicit="true" para forzar la declaración de todas las variables.
         -->
-    <compilation debug="false" strict="false" explicit="true">
+    <compilation debug="true" strict="false" explicit="true">
       <assemblies>
         <add assembly="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
         <add assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>

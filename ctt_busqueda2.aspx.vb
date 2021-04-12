@@ -42,15 +42,6 @@ Partial Class ctt_busqueda2
         ddlAduana.SelectedValue = "0"
         ddlAduana.DataBind()
 
-        oCC.consultaSP("getDestinaciones", , "Destinaciones")
-        param1(1) = "[DESTINACION]"
-        oCC.oDS.Tables("Destinaciones").Rows.Add(param1)
-        ddlDestinacion.DataSource = oCC.oDS.Tables("Destinaciones")
-        ddlDestinacion.DataTextField = "destinacion"
-        ddlDestinacion.DataValueField = "iddestinacion"
-        ddlDestinacion.SelectedValue = "0"
-        ddlDestinacion.DataBind()
-
         oCC.consultaSP("getMediosTransportes", , "Via")
         param1(1) = "[VIA]"
         oCC.oDS.Tables("Via").Rows.Add(param1)
@@ -59,6 +50,15 @@ Partial Class ctt_busqueda2
         ddlVia.DataValueField = "idmediotransporte"
         ddlVia.SelectedValue = "0"
         ddlVia.DataBind()
+
+        oCC.consultaSP("getDestinaciones", , "Destinaciones")
+        param1(1) = "[DESTINACION]"
+        oCC.oDS.Tables("Destinaciones").Rows.Add(param1)
+        ddlDestinacion.DataSource = oCC.oDS.Tables("Destinaciones")
+        ddlDestinacion.DataTextField = "destinacion"
+        ddlDestinacion.DataValueField = "iddestinacion"
+        ddlDestinacion.SelectedValue = "0"
+        ddlDestinacion.DataBind()
 
         oCC.consultaSP("getPaises2", , "Pais")
         param1(1) = "[PROCEDENCIA/DESTINO]"
@@ -101,6 +101,88 @@ Partial Class ctt_busqueda2
             Label1.Text = "No se encontraron operaciones."
         End Try
     End Sub
+    '[af_BuscadorDespachosItemsCSV]
+    Protected Function buscarCsv() As Data.DataSet
+        Dim oComm As New SqlCommand
+        Dim oCC As New clsConex
+        Dim SP As String
+
+
+        oComm.CommandType = Data.CommandType.StoredProcedure
+        Dim lparam As New List(Of SqlParameter)
+        Dim param As SqlParameter
+        param = New SqlParameter("@cliente", Data.SqlDbType.Char, 255)
+        Dim lbl As Label = Master.FindControl("lblUser")
+        param.Value = lbl.Text
+        lparam.Add(param)
+        param = (New SqlParameter("@tipo", Data.SqlDbType.Char, 255))
+        param.Value = ddlTipo.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@tnumero", SqlDbType.Char, 255))
+        param.Value = ddlNumero.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@numero", SqlDbType.Char, 50))
+        param.Value = Trim(txtNumero.Text)
+        lparam.Add(param)
+        param = (New SqlParameter("@tfecha", SqlDbType.VarChar, 50))
+        param.Value = ddlFechas.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@desde", SqlDbType.SmallDateTime))
+        If Trim(txtDesde.Text) = "" Then
+            param.Value = DateTime.Now.AddDays(-365).ToShortDateString
+        Else
+            param.Value = txtDesde.Text
+        End If
+
+        lparam.Add(param)
+        param = (New SqlParameter("@hasta", SqlDbType.SmallDateTime))
+        If Trim(txtHasta.Text) = "" Then
+            param.Value = DateTime.Now.ToShortDateString
+        Else
+            param.Value = txtHasta.Text
+        End If
+        lparam.Add(param)
+        param = (New SqlParameter("@destinacion", SqlDbType.Int))
+        param.Value = ddlDestinacion.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@aduana", SqlDbType.Int))
+        param.Value = ddlAduana.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@medio_transporte", SqlDbType.Int))
+        param.Value = ddlVia.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@canal", SqlDbType.VarChar, 50))
+        param.Value = ddlCanal.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@pais", SqlDbType.Int))
+        param.Value = ddlProcedencia.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@estado", SqlDbType.VarChar, 30))
+        param.Value = ddlEstados.SelectedValue
+        lparam.Add(param)
+        param = (New SqlParameter("@simi", SqlDbType.Bit))
+        If chkSimi.Checked Then
+            param.Value = 1
+        Else
+            param.Value = 0
+        End If
+        lparam.Add(param)
+
+        oCC.conexion = ConfigurationManager.ConnectionStrings("mySql").ConnectionString
+
+        If chkItem.Checked Then
+            SP = "af_BuscadorDespachosItemsCSV"
+        Else
+            SP = "af_BuscadorDespachos"
+        End If
+
+        If oCC.consultaSP(SP, lparam.ToArray, "Listado") = False Then
+            Response.Redirect("error-page.aspx")
+            Return Nothing
+        Else
+            Return oCC.oDS
+        End If
+    End Function
 
     Protected Function buscar() As Data.DataSet
         Dim oComm As New SqlCommand
@@ -254,42 +336,44 @@ Partial Class ctt_busqueda2
     Protected Sub ibCsv_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles ibCsv.Click
         Dim sbr As New StringBuilder
         Dim targetEncoding As Encoding
-        Dim ds As Data.DataSet = buscar()
+        Dim ds As Data.DataSet = buscarCsv()
 
         'For Each dc As Data.DataColumn In ds.Tables("Listado").Columns
         '    sbr.Append(dc.ColumnName & ";")
         'Next
         Dim gv As GridView
         If chkItem.Checked Then
-            gv = GViTEM2
+            For Each dc As Data.DataColumn In ds.Tables("Listado").Columns
+                sbr.Append(dc.ColumnName & ";")
+            Next
         Else
             gv = GridView1
-        End If
-        For Each dc As DataControlField In gv.Columns
-            If Not Trim(dc.HeaderText) = "" Then
-                sbr.Append(dc.HeaderText & ";")
+            For Each dc As DataControlField In gv.Columns
+                If Not Trim(dc.HeaderText) = "" Then
+                    sbr.Append(dc.HeaderText & ";")
+                End If
+            Next
+            sbr.Append("Valor Flete;Divisa Flete; Valor Seguro; Divisa Seguro;")
+
+            If chkItem.Checked Then
+                sbr.Append("Derecho Impo;")
             End If
-        Next
-        sbr.Append("Valor Flete;Divisa Flete; Valor Seguro; Divisa Seguro;")
-        Dim x As Integer?
+            sbr.Append("Canal;Incoterm;")
+            Dim lista = New List(Of String)
 
-        If chkItem.Checked Then
-            sbr.Append("Derecho Impo;")
+
+
+            If chkItem.Checked Then
+                sbr.Append("T/C;")
+                sbr.Append("Origen;")
+                sbr.Append("Procedencia;")
+            End If
         End If
-        sbr.Append("Canal;")
-        Dim lista = New List(Of String)
 
-
-
-        If chkItem.Checked Then
-            sbr.Append("T/C;")
-            sbr.Append("Origen;")
-            sbr.Append("Procedencia;")
-        End If
         For Each dr As Data.DataRow In ds.Tables("Listado").Rows
             sbr.AppendLine("")
             For Each dc As Data.DataColumn In ds.Tables("Listado").Columns
-                sbr.Append(dr.Item(dc.ColumnName) & ";")
+                sbr.Append(dr.Item(dc.ColumnName).ToString().Replace(";", " ") & ";")
             Next
         Next
 
