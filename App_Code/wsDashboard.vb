@@ -62,7 +62,7 @@ Public Class wsDashboard
             For Each dr As DataRow In oCc.oDS.Tables(0).Rows
                 Try
                     json.Append(separador)
-                    Dim item As New ItemDetailDashboard(dr("UnidadNEgocio").ToString().Trim(), dr("Dias").ToString().Trim(), dr("Identificador_Propio").ToString().Trim(), dr("despacho").ToString().Trim(), dr("estado").ToString().Trim(), dr("referencia_cliente").ToString().Trim(), dr("motivo").ToString().Trim(), dr("via").ToString().Trim(), dr("arribo").ToString().Trim())
+                    Dim item As New ItemDetailDashboard(dr("UnidadNEgocio").ToString().Trim(), dr("Dias").ToString().Trim(), dr("Identificador_Propio").ToString().Trim(), dr("despacho").ToString().Trim(), dr("estado").ToString().Trim(), dr("referencia_cliente").ToString().Trim(), dr("motivo").ToString().Trim(), dr("via").ToString().Trim(), dr("arribo").ToString().Trim(), dr("CarpetaId").ToString().Trim())
                     json.Append("{" & """" & "UnidadNegocio" & """" & ": " & """" & item.UnidadNegocio & """" & ",")
                     json.Append("""" & "Dias" & """" & ": " & item.Dias & ",")
                     json.Append("""" & "Identificador" & """" & ": " & """" & item.Identificador & """" & ",")
@@ -70,6 +70,7 @@ Public Class wsDashboard
                     json.Append("""" & "Referencia" & """" & ": " & """" & item.Referencia & """" & ",")
                     json.Append("""" & "Motivo" & """" & ": " & """" & item.Motivo & """" & ",")
                     json.Append("""" & "Via" & """" & ": " & """" & item.Via & """" & ",")
+                    json.Append("""" & "Id" & """" & ": " & """" & item.Id & """" & ",")
                     json.Append("""" & "FechaArribo" & """" & ": " & """" & item.FechaArribo & """" & ",")
                     json.Append("""" & "Estado" & """" & ": " & """" & item.Estado & """" & "}")
                     separador = ","
@@ -292,7 +293,7 @@ End Class
 
 
 Public Class ItemDetailDashboard
-    Sub New(ByVal un As String, ByVal d As String, ByVal i As String, ByVal dp As String, ByVal e As String, ByVal r As String, ByVal m As String, ByVal v As String, fa As String)
+    Sub New(ByVal un As String, ByVal d As String, ByVal i As String, ByVal dp As String, ByVal e As String, ByVal r As String, ByVal m As String, ByVal v As String, fa As String, id As String)
         _unidadNegocio = un
         _dias = d
         _identificador = i
@@ -302,7 +303,19 @@ Public Class ItemDetailDashboard
         _motivo = m
         _via = v
         _fechaArribo = fa
+        _id = id
     End Sub
+
+    Private _id As String
+
+    Public Property Id() As String
+        Get
+            Return _id
+        End Get
+        Set(value As String)
+            _id = value
+        End Set
+    End Property
 
     Private _fechaArribo As String
     Public Property FechaArribo() As String

@@ -54,6 +54,39 @@
                     //ctt_detalle2.aspx?psp=20001IC05002776M
 
                 }
+
+                $scope.openModalCarpeta = (ev, legajo) => {
+                    function DialogController($scope, $mdDialog) {
+                        $scope.referencia = legajo.Identificador;
+                        $scope.id = legajo.Id;
+                        $scope.hide = function () {
+                            $mdDialog.hide();
+                        };
+                        $scope.cancel = function () {
+                            $mdDialog.hide();
+                        };
+                        $scope.answer = function () {
+                            $mdDialog.hide();
+                        };
+                    }
+
+                    $mdDialog.show({
+                        //parent: parentEl,
+                        templateUrl: 'dashboardcarpetamodal.html',
+                        controller: ['$scope', '$mdDialog', DialogController],
+                        targetEvent: ev,
+                        parent: angular.element(document.body),
+                        clickOutsideToClose: true,
+                        multiple: true,
+                        locals: {
+                            referencia: legajo.Identificador,
+                            id: legajo.Id
+                        },
+                        fullscreen: false
+                    });
+                    //ctt_detalle2.aspx?psp=20001IC05002776M
+
+                }
             }
 
             $mdDialog.show({

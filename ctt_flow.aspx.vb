@@ -23,6 +23,91 @@ Partial Class ctt_flow
             DropDownList3.Items.Add(cont)
             DropDownList3.Text = cont.ToString
         Next
+
+        Dim oCC As New clsConex
+        Dim lisPrm As New Collections.Generic.List(Of SqlParameter)
+        Dim param As SqlParameter
+
+        param = New SqlParameter("@cliente", Data.SqlDbType.Char, 255)
+        param.Value = User.Identity.Name
+        lisPrm.Add(param)
+
+        Dim param1() As Object = {"0", "[DEPOSITO]"}
+
+        Try
+            oCC.consultaSP("GetDepositos", lisPrm.ToArray, "listDepositos")
+            param1(1) = "[DEPOSITO]"
+            oCC.oDS.Tables("listDepositos").Rows.Add(param1)
+            ddlDeposito.DataSource = oCC.oDS
+            ddlDeposito.DataMember = "listDepositos"
+            ddlDeposito.DataValueField = "codigo_deposito"
+            ddlDeposito.DataTextField = "descripcion_deposito"
+            ddlDeposito.SelectedValue = "0"
+            ddlDeposito.DataBind()
+        Catch ex As Exception
+
+        End Try
+
+        lisPrm.Clear()
+
+        Try
+            oCC.consultaSP("getMediosTransporte", lisPrm.ToArray, "transportes")
+            param1(1) = "[VIA]"
+            oCC.oDS.Tables("transportes").Rows.Add(param1)
+            ddlTransporte.DataSource = oCC.oDS
+            ddlTransporte.DataMember = "transportes"
+            ddlTransporte.DataValueField = "idmediotransporte"
+            ddlTransporte.DataTextField = "nombre"
+            ddlTransporte.SelectedValue = "0"
+            ddlTransporte.DataBind()
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            oCC.consultaSP("getAduanas", lisPrm.ToArray, "aduanas")
+            param1(1) = "[ADUANA]"
+            oCC.oDS.Tables("aduanas").Rows.Add(param1)
+            ddlAduana.DataSource = oCC.oDS
+            ddlAduana.DataMember = "aduanas"
+            ddlAduana.DataValueField = "idaduana"
+            ddlAduana.DataTextField = "nombre"
+            ddlAduana.SelectedValue = "0"
+            ddlAduana.DataBind()
+        Catch ex As Exception
+
+        End Try
+
+
+        oCC.consultaSP("getDestinaciones", , "Destinaciones")
+        param1(1) = "[DESTINACION]"
+        oCC.oDS.Tables("Destinaciones").Rows.Add(param1)
+        ddlDestinacion.DataSource = oCC.oDS.Tables("Destinaciones")
+        ddlDestinacion.DataTextField = "destinacion"
+        ddlDestinacion.DataValueField = "iddestinacion"
+        ddlDestinacion.SelectedValue = "0"
+        ddlDestinacion.DataBind()
+
+        oCC.consultaSP("getPaises2", , "Pais")
+        param1(1) = "[PROCEDENCIA/DESTINO]"
+        oCC.oDS.Tables("Pais").Rows.Add(param1)
+        ddlProcedencia.DataSource = oCC.oDS.Tables("pais")
+        ddlProcedencia.DataTextField = "nombre"
+        ddlProcedencia.DataValueField = "idpais"
+        ddlProcedencia.SelectedValue = "0"
+        ddlProcedencia.DataBind()
+
+        oCC.consultaSP("getCanales", , "Canal")
+        param1(1) = "[CANAL]"
+        oCC.oDS.Tables("Canal").Rows.Add(param1)
+        ddlCanal.DataSource = oCC.oDS.Tables("Canal")
+        ddlCanal.DataTextField = "nombre"
+        ddlCanal.DataValueField = "canal"
+        ddlCanal.SelectedValue = "0"
+        ddlCanal.DataBind()
+
+
+
     End Sub
 
     Private Sub binddata2()
@@ -32,8 +117,7 @@ Partial Class ctt_flow
         Dim param As SqlParameter
 
         param = New SqlParameter("@cliente", Data.SqlDbType.Char, 255)
-        Dim lbl As Label = Master.FindControl("lblUser")
-        param.Value = lbl.Text
+        param.Value = User.Identity.Name
         lisPrm.Add(param)
 
 
@@ -46,7 +130,31 @@ Partial Class ctt_flow
         lisPrm.Add(param)
 
         param = New SqlParameter("@ref", Data.SqlDbType.NVarChar, 100, Data.ParameterDirection.Input)
-        param.Value = Me.txtReferencia.Text.Trim() & "%"
+        param.Value = Me.txtReferencia.Text.Trim()
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@deposito", Data.SqlDbType.NVarChar, 100, Data.ParameterDirection.Input)
+        param.Value = Me.ddlDeposito.SelectedValue
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@destinacion", Data.SqlDbType.Int, Data.ParameterDirection.Input)
+        param.Value = Me.ddlDestinacion.SelectedValue
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@aduana", Data.SqlDbType.Int, Data.ParameterDirection.Input)
+        param.Value = Me.ddlAduana.SelectedValue
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@medio_transporte", Data.SqlDbType.Int, Data.ParameterDirection.Input)
+        param.Value = Me.ddlTransporte.SelectedValue
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@canal", Data.SqlDbType.NVarChar, 20, Data.ParameterDirection.Input)
+        param.Value = Me.ddlCanal.SelectedValue
+        lisPrm.Add(param)
+
+        param = New SqlParameter("@pais", Data.SqlDbType.Int, Data.ParameterDirection.Input)
+        param.Value = Me.ddlProcedencia.SelectedValue
         lisPrm.Add(param)
 
         Try
@@ -113,6 +221,17 @@ Partial Class ctt_flow
             GridView10.DataMember = "Aduana"
             GridView10.DataBind()
             renderChartStacked(oCC.oDS.Tables("aduana"), Chart5)
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            oCC.consultaSP("IA_dEPOSITO", lisPrm.ToArray, "deposito")
+            oCC.oDS.Tables("deposito").Columns.RemoveAt(oCC.oDS.Tables("deposito").Columns.Count - 1)
+            GridView14.DataSource = oCC.oDS
+            GridView14.DataMember = "deposito"
+            GridView14.DataBind()
+            renderChartStacked(oCC.oDS.Tables("deposito"), Chart14)
         Catch ex As Exception
 
         End Try
@@ -267,12 +386,6 @@ Partial Class ctt_flow
         Catch ex As Exception
 
         End Try
-
-        Try
-            'ClientScript.RegisterClientScriptBlock(Me.Page.GetType, "resaltarFila", "function onUpdating(){var updateProgressDiv = $get('updateProgressDiv');updateProgressDiv.style.display = '';var gridView = $get('<%= this.GridView10.ADUANA %>');var gridViewBounds = Sys.UI.DomElement.getBounds(gridView);var updateProgressDivBounds = Sys.UI.DomElement.getBounds(updateProgressDiv);var x = gridViewBounds.x + Math.round(gridViewBounds.width / 2) - Math.round(updateProgressDivBounds.width / 2);var y = gridViewBounds.y + Math.round(gridViewBounds.height / 2) - Math.round(updateProgressDivBounds.height / 2);Sys.UI.DomElement.setLocation (updateProgressDiv, x, y);}function onUpdated() {var updateProgressDiv = $get('updateProgressDiv');updateProgressDiv.style.display = 'none';}")
-        Catch ex As Exception
-
-        End Try
     End Sub
 
 
@@ -324,70 +437,81 @@ Partial Class ctt_flow
 
     Private Sub renderChartStacked(ByVal tbl As Data.DataTable, ByVal chr As Chart, Optional colorLinea() As Drawing.Color = Nothing)
         chr.Series.Clear()
+        Try
+            chr.Legends.Clear()
+        Catch ex As Exception
+
+        End Try
+        Dim colCount As Integer
+        If (Me.DropDownList3.SelectedItem.Text = Convert.ToString(Date.Now.Year)) Then
+            colCount = Date.Now.Month
+        Else
+            colCount = 12
+        End If
         For Each dr As DataRow In tbl.Rows
             'If (Not colorLinea Is Nothing) Then
 
             chr.Series.Add(dr.Item(0).ToString)
-                For col As Integer = 1 To Date.Now.Month
-                    Dim valor As String
-                    If (col < dr.ItemArray.Length) Then
-                        Try
-                            valor = dr(col).ToString
-                        Catch ex As Exception
-                            valor = "0"
-                        End Try
-                    Else
+            For col As Integer = 1 To colCount
+                Dim valor As String
+                If (col < dr.ItemArray.Length) Then
+                    Try
+                        valor = dr(col).ToString
+                    Catch ex As Exception
                         valor = "0"
-                    End If
-                    Dim point As New DataPoint()
-                    point.SetValueY(CDbl(valor))
-                    point.SetValueXY(DateAndTime.MonthName(col), CDbl(valor))
+                    End Try
+                Else
+                    valor = "0"
+                End If
+                Dim point As New DataPoint()
+                point.SetValueY(CDbl(valor))
+                point.SetValueXY(DateAndTime.MonthName(col), CDbl(valor))
 
 
-                    chr.Series(dr.Item(0).ToString).Points.Add(point)
-                    point.BorderWidth = 4
-                    Select Case dr.Item(0).ToString
-                        Case "VERDE"
-                            point.Color = Drawing.Color.DarkGreen
+                chr.Series(dr.Item(0).ToString).Points.Add(point)
+                point.BorderWidth = 4
+                Select Case dr.Item(0).ToString
+                    Case "VERDE"
+                        point.Color = Drawing.Color.DarkGreen
                         'point.BorderColor = Drawing.Color.DarkGreen
                         chr.Series(dr.Item(0).ToString).Color = Drawing.Color.DarkGreen
-                        Case "ROJO"
-                            point.Color = Drawing.Color.Red
+                    Case "ROJO"
+                        point.Color = Drawing.Color.Red
                         'point.BorderColor = Drawing.Color.Red
                         chr.Series(dr.Item(0).ToString).Color = Drawing.Color.Red
-                        Case "NARANJA"
-                            point.Color = Drawing.Color.DarkOrange
+                    Case "NARANJA"
+                        point.Color = Drawing.Color.DarkOrange
                         'point.BorderColor = Drawing.Color.DarkOrange
                         chr.Series(dr.Item(0).ToString).Color = Drawing.Color.DarkOrange
-                    End Select
+                End Select
 
-                    'point.Color = colorLinea(chr.Series.Count - 1)
-                    'point.BorderColor = colorLinea(chr.Series.Count - 1)
-
-
-
-                Next
+                'point.Color = colorLinea(chr.Series.Count - 1)
+                'point.BorderColor = colorLinea(chr.Series.Count - 1)
 
 
-                'Else
 
-                '    If dr.Item(0).ToString = "" Or dr.Item(0) Is Nothing Then
-                '        dr.Item(0) = "Sin Especificar"
-                '    End If
-                '    chr.Series.Add(dr.Item(0).ToString)
+            Next
 
-                '    For Each dc As String In dr.ItemArray
-                '        If Not dc = dr.Item(0).ToString Then
-                '            chr.Series(dr.Item(0).ToString).Points.AddY(CDbl(dc))
-                '        End If
-                '    Next
 
-                '    ' disable x axis margin
-                '    ' Set the first two series to be grouped into Group1
-                '    'chr.Series(dr.Item(0).ToString)("StackedGroupName") = "Group1"
+            'Else
 
-                'End If
-                chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn100
+            '    If dr.Item(0).ToString = "" Or dr.Item(0) Is Nothing Then
+            '        dr.Item(0) = "Sin Especificar"
+            '    End If
+            '    chr.Series.Add(dr.Item(0).ToString)
+
+            '    For Each dc As String In dr.ItemArray
+            '        If Not dc = dr.Item(0).ToString Then
+            '            chr.Series(dr.Item(0).ToString).Points.AddY(CDbl(dc))
+            '        End If
+            '    Next
+
+            '    ' disable x axis margin
+            '    ' Set the first two series to be grouped into Group1
+            '    'chr.Series(dr.Item(0).ToString)("StackedGroupName") = "Group1"
+
+            'End If
+            chr.Series(dr.Item(0).ToString).ChartType = SeriesChartType.StackedColumn100
             chr.Series(dr.Item(0).ToString).Name = dr.Item(0).ToString
             ' show point labels
             chr.Series(dr.Item(0).ToString).IsValueShownAsLabel = False
@@ -402,6 +526,7 @@ Partial Class ctt_flow
         chr.ChartAreas(0).AxisX.IsMarginVisible = True
         chr.ChartAreas(0).Area3DStyle.Enable3D = True
         chr.ChartAreas(0).AxisX.Interval = 1
+
         chr.Legends.Add("Legenda")
         chr.Legends("Legenda").Enabled = True
 
@@ -484,3 +609,4 @@ Partial Class ctt_flow
         Chart8.Style.Item("height") = "auto"
     End Sub
 End Class
+
